@@ -8,9 +8,11 @@ import {
   ShieldCheck,
   Play,
   ArrowRight,
-  Flame,
   CheckCircle2,
   Calendar,
+  Sparkles,
+  Check,
+  Zap,
 } from 'lucide-react';
 import { calculateInningsScore } from '../utils/scoring';
 
@@ -19,7 +21,7 @@ interface DashboardProps {
   activeMatch: Match | null;
   onNavigate: (route: string) => void;
   onSelectMatch: (match: Match) => void;
-  onLoadDemoMatch: () => void;
+  onLoadDemoMatch?: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -86,17 +88,33 @@ export const Dashboard: React.FC<DashboardProps> = ({
       )}
 
       {/* Main Hero */}
-      <div className="relative overflow-hidden rounded-3xl glass-panel border border-slate-800 bg-gradient-to-b from-stadium-850/90 to-stadium-950 p-8 sm:p-12 text-center sm:text-left">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cricket-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+      <div className="relative overflow-hidden rounded-3xl glass-panel border border-cricket-500/20 bg-gradient-to-b from-stadium-850/90 via-stadium-900 to-stadium-950 p-8 sm:p-12 text-center sm:text-left">
+        {/* Subtle Pitch Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0, 255, 135, 0.4) 1px, transparent 0)`,
+            backgroundSize: '24px 24px'
+          }} 
+        />
+        {/* Subtle glowing cricket ball graphic decoration */}
+        <div className="absolute top-1/2 right-12 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none">
+          <div className="relative w-64 h-64 rounded-full bg-gradient-to-tr from-cricket-600/10 via-cricket-500/20 to-emerald-400/5 blur-2xl animate-pulse" />
+          <div className="absolute w-44 h-44 rounded-full border border-cricket-500/20 bg-stadium-900/60 backdrop-blur-sm flex items-center justify-center shadow-neon">
+            <div className="w-36 h-36 rounded-full border-2 border-dashed border-cricket-400/30 flex items-center justify-center">
+              <Zap className="w-12 h-12 text-cricket-neon opacity-70" />
+            </div>
+          </div>
+        </div>
 
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cricket-500/15 border border-cricket-500/30 text-cricket-neon text-xs font-bold mb-4">
+        <div className="max-w-3xl relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cricket-500/15 border border-cricket-500/30 text-cricket-neon text-xs font-bold mb-4">
             <ShieldCheck className="w-4 h-4" />
-            <span>Official Ground & Tournament Scorer</span>
+            <span>Official Ground Scorer & Analytics Dashboard</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
-            No More <span className="glow-text-neon">#Jagado.</span>
+            No More <span className="text-cricket-neon glow-text-neon">#Jagado.</span>
           </h1>
 
           <p className="text-lg sm:text-xl font-medium text-slate-300 mt-3 max-w-xl">
@@ -107,10 +125,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="flex flex-wrap items-center gap-3.5 mt-8 justify-center sm:justify-start">
             <button
               onClick={() => onNavigate('create-match')}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-black text-base bg-gradient-to-r from-cricket-600 to-cricket-500 hover:from-cricket-500 hover:to-cricket-400 text-black shadow-neon transition-all hover:scale-105 active:scale-95"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-black text-base bg-gradient-to-r from-cricket-600 via-cricket-500 to-cricket-neon text-black shadow-neon transition-all hover:scale-105 active:scale-95"
             >
               <PlusCircle className="w-5 h-5" />
-              <span>+ Create New Match</span>
+              <span>Create New Match</span>
             </button>
 
             <button
@@ -121,14 +139,52 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <span>View Match History</span>
             </button>
 
-            <button
-              onClick={onLoadDemoMatch}
-              className="flex items-center gap-2 px-5 py-3.5 rounded-xl font-semibold text-sm bg-cricket-950/40 text-cricket-300 border border-cricket-700/50 hover:bg-cricket-900/60 transition-all"
-              title="Instantly try scoring with a realistic Ahmedabad match"
-            >
-              <Flame className="w-4 h-4 text-amber-400" />
-              <span>Load Demo Match</span>
-            </button>
+            {onLoadDemoMatch && (
+              <button
+                onClick={onLoadDemoMatch}
+                className="flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-base bg-cricket-500/10 hover:bg-cricket-500/20 text-cricket-300 border border-cricket-500/30 transition-all hover:text-white"
+              >
+                <Sparkles className="w-4 h-4 text-cricket-neon" />
+                <span>Load Demo Match</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Anti-#Jagado Feature Highlight Card */}
+      <div className="glass-panel rounded-2xl p-6 border border-cricket-500/30 bg-gradient-to-r from-stadium-900 via-cricket-950/20 to-stadium-900 shadow-neon">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-cricket-neon font-black text-xs uppercase tracking-wider">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Anti-#Jagado Match Record</span>
+            </div>
+            <h3 className="text-lg font-black text-white">
+              Every scoring event is recorded in chronological order.
+            </h3>
+            <p className="text-xs text-slate-300">
+              Complete single-source-of-truth audit trail. Zero modified scores without full delivery log.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stadium-950/80 border border-slate-800 text-slate-200">
+              <Check className="w-4 h-4 text-cricket-neon shrink-0" />
+              <span className="font-semibold">Ball recorded</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stadium-950/80 border border-slate-800 text-slate-200">
+              <Check className="w-4 h-4 text-cricket-neon shrink-0" />
+              <span className="font-semibold">Score verified</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stadium-950/80 border border-slate-800 text-slate-200">
+              <Check className="w-4 h-4 text-cricket-neon shrink-0" />
+              <span className="font-semibold">Wicket recorded</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stadium-950/80 border border-slate-800 text-slate-200">
+              <Check className="w-4 h-4 text-cricket-neon shrink-0" />
+              <span className="font-semibold">Changes tracked</span>
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +192,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       {/* Aggregate Statistics Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Matches */}
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-stadium-900/80">
+        <div className="glass-panel p-5 rounded-2xl border border-slate-800/90 bg-stadium-900/80 hover:border-slate-700 transition-all">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Total Matches</span>
             <Trophy className="w-4 h-4 text-cricket-400" />
@@ -146,7 +202,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         {/* Completed */}
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-stadium-900/80">
+        <div className="glass-panel p-5 rounded-2xl border border-slate-800/90 bg-stadium-900/80 hover:border-slate-700 transition-all">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Completed</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
@@ -156,7 +212,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         {/* Total Runs */}
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-stadium-900/80">
+        <div className="glass-panel p-5 rounded-2xl border border-slate-800/90 bg-stadium-900/80 hover:border-slate-700 transition-all">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Total Runs</span>
             <Activity className="w-4 h-4 text-amber-400" />
@@ -166,7 +222,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         {/* Total Wickets */}
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-stadium-900/80">
+        <div className="glass-panel p-5 rounded-2xl border border-slate-800/90 bg-stadium-900/80 hover:border-slate-700 transition-all">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-bold uppercase tracking-wider">Total Wickets</span>
             <ShieldCheck className="w-4 h-4 text-red-400" />
@@ -204,22 +260,23 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
             <h3 className="text-base font-bold text-white">No Matches Recorded Yet</h3>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Start your first match now or load the realistic sample demo match to test the
-              live scoring engine.
+              Create your first match or load a demo match to test digital scoring.
             </p>
-            <div className="pt-2 flex justify-center gap-3">
+            <div className="pt-2 flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => onNavigate('create-match')}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-cricket-500 text-black hover:bg-cricket-400 shadow-neon"
+                className="px-5 py-2.5 rounded-xl text-xs font-black bg-cricket-500 text-black hover:bg-cricket-400 shadow-neon"
               >
-                + Create Match
+                + Create New Match
               </button>
-              <button
-                onClick={onLoadDemoMatch}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-stadium-800 text-slate-300 hover:text-white"
-              >
-                Load Demo Match
-              </button>
+              {onLoadDemoMatch && (
+                <button
+                  onClick={onLoadDemoMatch}
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold bg-stadium-800 text-cricket-neon border border-cricket-500/30 hover:bg-stadium-750"
+                >
+                  Load Demo Match
+                </button>
+              )}
             </div>
           </div>
         ) : (
@@ -295,3 +352,4 @@ export const Dashboard: React.FC<DashboardProps> = ({
     </div>
   );
 };
+

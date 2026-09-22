@@ -58,8 +58,8 @@ export const EditBallModal: React.FC<EditBallModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="glass-panel w-full max-w-lg rounded-2xl border border-slate-700 bg-stadium-900 p-6 shadow-2xl space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+      <div className="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-700 bg-stadium-900 p-4 sm:p-6 shadow-2xl space-y-4">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2 text-cricket-neon">
             <Edit3 className="w-5 h-5" />

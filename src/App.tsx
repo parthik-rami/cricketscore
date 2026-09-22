@@ -128,7 +128,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stadium-950 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-stadium-950 text-slate-100 flex flex-col font-sans overflow-x-hidden">
       {/* App Navigation */}
       <Navbar
         currentRoute={currentRoute}
@@ -137,7 +137,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 relative z-10">
         {currentRoute === 'dashboard' && (
           <Dashboard
             matches={matches}
@@ -215,6 +215,20 @@ export const App: React.FC = () => {
           />
         )}
       </main>
+
+      {/* Global Footer */}
+      <footer className="w-full border-t border-slate-800/80 bg-stadium-950/90 backdrop-blur-md py-4 px-4 text-center text-xs text-slate-400 select-none relative z-10">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <span>© 2026 CricketScore</span>
+            <span className="text-slate-600">•</span>
+            <span>No More <span className="text-cricket-400 font-semibold">#Jagado</span></span>
+          </div>
+          <div>
+            Created by <strong className="text-slate-200 font-black tracking-wide uppercase">PARTHIK RAMI</strong>
+          </div>
+        </div>
+      </footer>
 
       {/* Persistent Toast Notifications */}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />

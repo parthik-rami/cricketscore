@@ -9,14 +9,13 @@ import {
   RotateCcw,
   Trash2,
   ShieldCheck,
-  Flame,
 } from 'lucide-react';
 
 interface SettingsProps {
   settings: MatchSettings;
   onUpdateSettings: (newSettings: MatchSettings) => void;
   onResetAllData: () => void;
-  onLoadDemoMatch: () => void;
+  onLoadDemoMatch?: () => void;
   onShowToast: (message: string, type?: 'success' | 'warning' | 'info' | 'error') => void;
 }
 
@@ -24,7 +23,7 @@ export const Settings: React.FC<SettingsProps> = ({
   settings,
   onUpdateSettings,
   onResetAllData,
-  onLoadDemoMatch,
+  onLoadDemoMatch: _onLoadDemoMatch,
   onShowToast,
 }) => {
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
@@ -123,29 +122,6 @@ export const Settings: React.FC<SettingsProps> = ({
                 settings.confirmBeforeUndo ? 'translate-x-6' : 'translate-x-0'
               }`}
             />
-          </button>
-        </div>
-
-        {/* Demo Match Quick Loader */}
-        <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-stadium-900/80 flex items-center justify-between">
-          <div className="flex items-center gap-3.5">
-            <div className="w-9 h-9 rounded-xl bg-stadium-850 flex items-center justify-center text-amber-400 border border-slate-800">
-              <Flame className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white">Load Demo Match</h3>
-              <p className="text-xs text-slate-400">
-                Populate a realistic sample match (Ahmedabad Strikers vs Gujarat Warriors) to test
-                features immediately.
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={onLoadDemoMatch}
-            className="px-4 py-2 rounded-xl text-xs font-bold bg-stadium-800 hover:bg-stadium-750 text-slate-200 border border-slate-700 transition-colors"
-          >
-            Load Demo
           </button>
         </div>
 
