@@ -10,7 +10,6 @@ import {
   saveSettings,
   DEFAULT_SETTINGS,
 } from './utils/storage';
-import { createDemoMatch } from './data/demoMatch';
 import { soundManager } from './utils/sound';
 import { Navbar } from './components/Navbar';
 import { ToastContainer, ToastMessage } from './components/Toast';
@@ -101,16 +100,6 @@ export const App: React.FC = () => {
     showToast('Match record deleted.', 'warning');
   };
 
-  // Load Demo Match
-  const handleLoadDemoMatch = () => {
-    const demo = createDemoMatch();
-    setActiveMatch(demo);
-    saveCurrentMatch(demo);
-    setMatches(loadMatchHistory());
-    setCurrentRoute('live-scoring');
-    showToast('Loaded demo match: Ahmedabad Strikers vs Gujarat Warriors', 'success');
-  };
-
   // Update settings
   const handleUpdateSettings = (newSettings: MatchSettings) => {
     setSettingsState(newSettings);
@@ -144,7 +133,6 @@ export const App: React.FC = () => {
             activeMatch={activeMatch}
             onNavigate={(route) => setCurrentRoute(route)}
             onSelectMatch={handleSelectMatch}
-            onLoadDemoMatch={handleLoadDemoMatch}
           />
         )}
 
@@ -210,7 +198,6 @@ export const App: React.FC = () => {
             settings={settings}
             onUpdateSettings={handleUpdateSettings}
             onResetAllData={handleResetAllData}
-            onLoadDemoMatch={handleLoadDemoMatch}
             onShowToast={showToast}
           />
         )}

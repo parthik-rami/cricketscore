@@ -21,7 +21,6 @@ interface DashboardProps {
   activeMatch: Match | null;
   onNavigate: (route: string) => void;
   onSelectMatch: (match: Match) => void;
-  onLoadDemoMatch?: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -29,7 +28,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
   activeMatch,
   onNavigate,
   onSelectMatch,
-  onLoadDemoMatch,
 }) => {
   // Aggregate stats from all saved matches
   let totalRuns = 0;
@@ -138,16 +136,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <History className="w-5 h-5 text-slate-400" />
               <span>View Match History</span>
             </button>
-
-            {onLoadDemoMatch && (
-              <button
-                onClick={onLoadDemoMatch}
-                className="flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-base bg-cricket-500/10 hover:bg-cricket-500/20 text-cricket-300 border border-cricket-500/30 transition-all hover:text-white"
-              >
-                <Sparkles className="w-4 h-4 text-cricket-neon" />
-                <span>Load Demo Match</span>
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -260,23 +248,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
             <h3 className="text-base font-bold text-white">No Matches Recorded Yet</h3>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Create your first match or load a demo match to test digital scoring.
+              Create your first match to start digital scoring and track live deliveries on the pitch.
             </p>
-            <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <div className="pt-2 flex justify-center">
               <button
                 onClick={() => onNavigate('create-match')}
                 className="px-5 py-2.5 rounded-xl text-xs font-black bg-cricket-500 text-black hover:bg-cricket-400 shadow-neon"
               >
                 + Create New Match
               </button>
-              {onLoadDemoMatch && (
-                <button
-                  onClick={onLoadDemoMatch}
-                  className="px-5 py-2.5 rounded-xl text-xs font-bold bg-stadium-800 text-cricket-neon border border-cricket-500/30 hover:bg-stadium-750"
-                >
-                  Load Demo Match
-                </button>
-              )}
             </div>
           </div>
         ) : (

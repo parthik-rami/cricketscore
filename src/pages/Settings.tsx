@@ -15,7 +15,6 @@ interface SettingsProps {
   settings: MatchSettings;
   onUpdateSettings: (newSettings: MatchSettings) => void;
   onResetAllData: () => void;
-  onLoadDemoMatch?: () => void;
   onShowToast: (message: string, type?: 'success' | 'warning' | 'info' | 'error') => void;
 }
 
@@ -23,7 +22,6 @@ export const Settings: React.FC<SettingsProps> = ({
   settings,
   onUpdateSettings,
   onResetAllData,
-  onLoadDemoMatch: _onLoadDemoMatch,
   onShowToast,
 }) => {
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
