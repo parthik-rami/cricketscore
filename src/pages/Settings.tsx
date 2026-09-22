@@ -150,7 +150,7 @@ export const Settings: React.FC<SettingsProps> = ({
       <div className="p-4 rounded-2xl bg-stadium-900/50 border border-slate-800 text-xs text-slate-400 space-y-2">
         <div className="flex items-center gap-2 text-white font-bold">
           <ShieldCheck className="w-4 h-4 text-cricket-neon" />
-          <span>TappaScore – No More #Jagado v1.0.0</span>
+          <span>TappaScore – No More #જગડો v1.0.0</span>
         </div>
         <p>
           Designed for street, gully, turf, and club cricket tournaments. Every ball is recorded in

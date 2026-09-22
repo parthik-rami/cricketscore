@@ -209,7 +209,7 @@ export const App: React.FC = () => {
           <div className="flex items-center gap-1.5">
             <span>© 2026 TappaScore</span>
             <span className="text-slate-600">•</span>
-            <span>No More <span className="text-cricket-400 font-semibold">#Jagado</span></span>
+            <span>No More <span className="text-cricket-400 font-semibold">#જગડો</span></span>
           </div>
           <div>
             Created by <strong className="text-slate-200 font-black tracking-wide uppercase">PARTHIK RAMI</strong>

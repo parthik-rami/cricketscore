@@ -620,7 +620,7 @@ export const LiveScoring: React.FC<LiveScoringProps> = ({
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-stadium-850 hover:bg-stadium-800 text-slate-300 border border-slate-800 transition-colors"
           >
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>#Jagado Audit Log</span>
+            <span>#જગડો Audit Log</span>
           </button>
         </div>
 

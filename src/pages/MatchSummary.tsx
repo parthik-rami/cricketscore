@@ -90,7 +90,7 @@ export const MatchSummary: React.FC<MatchSummaryProps> = ({
       `*${match.teamB.name}*: ${score2 ? `${score2.totalRuns}/${score2.wickets} (${score2.oversFormatted} ov)` : 'Did not bat'}\n\n` +
       `🏆 *Result*: ${result.resultText}\n` +
       (potm ? `⭐ *Player of the Match*: ${potm.name}\n` : '') +
-      `\nVerified by TappaScore – No More #Jagado!`;
+      `\nVerified by TappaScore – No More #જગડો!`;
 
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);

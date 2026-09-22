@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate, active
                 </span>
               </div>
               <p className="text-[11px] font-medium text-slate-400 tracking-wide">
-                No More <span className="text-cricket-400 font-semibold">#Jagado</span>
+                No More <span className="text-cricket-400 font-semibold">#જગડો</span>
               </p>
             </div>
           </div>

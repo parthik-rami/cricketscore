@@ -112,7 +112,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
-            No More <span className="text-cricket-neon glow-text-neon">#Jagado.</span>
+            No More <span className="text-cricket-neon glow-text-neon">#જગડો.</span>
           </h1>
 
           <p className="text-lg sm:text-xl font-medium text-slate-300 mt-3 max-w-xl">
@@ -140,13 +140,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* Anti-#Jagado Feature Highlight Card */}
+      {/* Anti-#જગડો Feature Highlight Card */}
       <div className="glass-panel rounded-2xl p-6 border border-cricket-500/30 bg-gradient-to-r from-stadium-900 via-cricket-950/20 to-stadium-900 shadow-neon">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-cricket-neon font-black text-xs uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4" />
-              <span>Anti-#Jagado Match Record</span>
+              <span>Anti-#જગડો Match Record</span>
             </div>
             <h3 className="text-lg font-black text-white">
               Every scoring event is recorded in chronological order.

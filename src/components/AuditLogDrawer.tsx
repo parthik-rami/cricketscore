@@ -27,7 +27,7 @@ export const AuditLogDrawer: React.FC<AuditLogDrawerProps> = ({ isOpen, onClose,
             </div>
             <div>
               <h3 className="text-base font-black text-white flex items-center gap-1.5">
-                #Jagado Prevention Record
+                #જગડો Prevention Record
               </h3>
               <p className="text-[11px] text-cricket-400 font-medium">
                 Cryptographic Ball & Score Audit Trail
