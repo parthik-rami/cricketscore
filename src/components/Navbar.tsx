@@ -46,14 +46,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, onNavigate, active
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cricket-600 via-cricket-500 to-cricket-neon flex items-center justify-center shadow-neon group-hover:scale-105 transition-transform duration-200">
               <div className="relative">
-                <span className="text-black font-black text-lg tracking-tighter">CS</span>
+                <span className="text-black font-black text-lg tracking-tighter">TS</span>
                 <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-black"></span>
               </div>
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-xl font-black tracking-tight text-white group-hover:text-cricket-neon transition-colors">
-                  Cricket<span className="text-cricket-neon">Score</span>
+                  Tappa<span className="text-cricket-neon">Score</span>
                 </span>
                 <span className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-cricket-500/10 text-cricket-400 border border-cricket-500/20">
                   <ShieldCheck className="w-3 h-3" /> VERIFIED

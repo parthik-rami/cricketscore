@@ -139,7 +139,7 @@ export const AuditLogDrawer: React.FC<AuditLogDrawerProps> = ({ isOpen, onClose,
         {/* Footer */}
         <div className="pt-3 border-t border-slate-800 text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5">
           <ShieldCheck className="w-4 h-4 text-cricket-neon" />
-          <span>CricketScore Integrity Engine • #NoMoreJagado</span>
+          <span>TappaScore Integrity Engine • #NoMoreJagado</span>
         </div>
       </div>
     </div>
