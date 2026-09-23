@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeftRight, UserCheck, Award } from 'lucide-react';
+import { ArrowLeftRight, UserCheck, Award, Edit3 } from 'lucide-react';
 import { BatsmanStats, BowlerStats } from '../types/cricket';
 
 interface ActivePlayersCardProps {
@@ -9,6 +9,7 @@ interface ActivePlayersCardProps {
   onSwapStrike: () => void;
   onChangeBowler: () => void;
   onChangeBatter: (target: 'striker' | 'nonStriker') => void;
+  onEditPlayer?: (playerId: string) => void;
 }
 
 export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
@@ -18,6 +19,7 @@ export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
   onSwapStrike,
   onChangeBowler,
   onChangeBatter,
+  onEditPlayer,
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
@@ -45,7 +47,7 @@ export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
           {/* Striker (Green Accent Highlight) */}
           <div className="p-3.5 rounded-2xl bg-stadium-850 border-2 border-cricket-500/60 shadow-neon relative overflow-hidden group">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-cricket-neon shadow-neon animate-pulse" />
                 <span
                   onClick={() => onChangeBatter('striker')}
@@ -54,6 +56,15 @@ export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
                 >
                   {striker ? striker.name : 'Select Striker'} *
                 </span>
+                {striker && onEditPlayer && (
+                  <button
+                    onClick={() => onEditPlayer(striker.playerId)}
+                    className="p-1 rounded bg-stadium-800 hover:bg-stadium-750 text-slate-400 hover:text-cricket-neon transition-colors"
+                    title="Edit player name / number"
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                  </button>
+                )}
                 <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-cricket-500/20 text-cricket-neon border border-cricket-500/40">
                   STRIKER
                 </span>
@@ -92,7 +103,7 @@ export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
           {/* Non-Striker */}
           <div className="p-3.5 rounded-2xl bg-stadium-850/60 border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-600" />
                 <span
                   onClick={() => onChangeBatter('nonStriker')}
@@ -100,6 +111,15 @@ export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
                 >
                   {nonStriker ? nonStriker.name : 'Select Non-Striker'}
                 </span>
+                {nonStriker && onEditPlayer && (
+                  <button
+                    onClick={() => onEditPlayer(nonStriker.playerId)}
+                    className="p-1 rounded bg-stadium-800 hover:bg-stadium-750 text-slate-400 hover:text-cricket-neon transition-colors"
+                    title="Edit player name / number"
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                  </button>
+                )}
                 <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-stadium-800 text-slate-400 border border-slate-700">
                   NON-STRIKER
                 </span>
@@ -157,9 +177,20 @@ export const ActivePlayersCard: React.FC<ActivePlayersCardProps> = ({
           </div>
 
           <div className="mt-3">
-            <h4 className="text-xl font-black text-white tracking-tight">
-              {bowler ? bowler.name : 'Select Bowler'}
-            </h4>
+            <div className="flex items-center gap-2">
+              <h4 className="text-xl font-black text-white tracking-tight">
+                {bowler ? bowler.name : 'Select Bowler'}
+              </h4>
+              {bowler && onEditPlayer && (
+                <button
+                  onClick={() => onEditPlayer(bowler.playerId)}
+                  className="p-1 rounded bg-stadium-850 hover:bg-stadium-800 text-slate-400 hover:text-amber-400 transition-colors"
+                  title="Edit player name / number"
+                >
+                  <Edit3 className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
             <p className="text-xs font-medium text-slate-400 mt-0.5">Spell in progress</p>
 
             {bowler && (

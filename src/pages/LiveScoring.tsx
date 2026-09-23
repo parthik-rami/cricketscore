@@ -6,6 +6,7 @@ import {
   Innings,
   Match,
   MatchSettings,
+  Player,
   WicketType,
 } from '../types/cricket';
 import { ScoreCard } from '../components/ScoreCard';
@@ -15,6 +16,8 @@ import { ScoringButtons } from '../components/ScoringButtons';
 import { WicketModal } from '../components/WicketModal';
 import { ExtrasModal } from '../components/ExtrasModal';
 import { SelectBowlerModal } from '../components/SelectBowlerModal';
+import { SelectBatterModal } from '../components/SelectBatterModal';
+import { EditPlayerModal } from '../components/EditPlayerModal';
 import { EditBallModal } from '../components/EditBallModal';
 import { AuditLogDrawer } from '../components/AuditLogDrawer';
 import { ConfirmModal } from '../components/ConfirmModal';
@@ -57,6 +60,9 @@ export const LiveScoring: React.FC<LiveScoringProps> = ({
   const [isWicketModalOpen, setIsWicketModalOpen] = useState(false);
   const [isExtrasModalOpen, setIsExtrasModalOpen] = useState(false);
   const [isBowlerModalOpen, setIsBowlerModalOpen] = useState(false);
+  const [isBatterModalOpen, setIsBatterModalOpen] = useState(false);
+  const [selectedBatterTarget, setSelectedBatterTarget] = useState<'striker' | 'nonStriker'>('striker');
+  const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
   const [isAuditDrawerOpen, setIsAuditDrawerOpen] = useState(false);
   const [isUndoConfirmOpen, setIsUndoConfirmOpen] = useState(false);
   const [editingDelivery, setEditingDelivery] = useState<Delivery | null>(null);
@@ -434,6 +440,58 @@ export const LiveScoring: React.FC<LiveScoringProps> = ({
     onShowToast(`Bowler changed to ${player?.name || 'new bowler'}.`, 'info');
   };
 
+  // Change batter
+  const handleSelectBatter = (playerId: string, target: 'striker' | 'nonStriker') => {
+    const player = battingTeam.players.find((p) => p.id === playerId);
+    if (target === 'striker') {
+      updateInnings({
+        ...currentInnings,
+        currentStrikerId: playerId,
+      });
+      onShowToast(`Striker changed to ${player?.name || 'batter'}`, 'info');
+    } else {
+      updateInnings({
+        ...currentInnings,
+        currentNonStrikerId: playerId,
+      });
+      onShowToast(`Non-striker changed to ${player?.name || 'batter'}`, 'info');
+    }
+  };
+
+  // Save edited player details
+  const handleSavePlayer = (updatedPlayer: Player) => {
+    const isTeamA = match.teamA.players.some((p) => p.id === updatedPlayer.id);
+    const updatedTeamA = isTeamA
+      ? {
+          ...match.teamA,
+          players: match.teamA.players.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p)),
+        }
+      : match.teamA;
+    const updatedTeamB = !isTeamA
+      ? {
+          ...match.teamB,
+          players: match.teamB.players.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p)),
+        }
+      : match.teamB;
+
+    const auditEntry: AuditEntry = {
+      id: `aud-${Date.now()}`,
+      timestamp: new Date().toLocaleTimeString(),
+      action: 'player_edited',
+      description: `Player details updated: ${updatedPlayer.name}${updatedPlayer.jerseyNumber ? ` (#${updatedPlayer.jerseyNumber})` : ''}`,
+    };
+
+    onUpdateMatch({
+      ...match,
+      teamA: updatedTeamA,
+      teamB: updatedTeamB,
+      auditLog: [...match.auditLog, auditEntry],
+      updatedAt: new Date().toISOString(),
+    });
+
+    onShowToast(`Player info updated for ${updatedPlayer.name}!`, 'success');
+  };
+
   // Start Second Innings
   const handleStartSecondInnings = () => {
     const firstScore = calculateInningsScore(match.innings[0].deliveries);
@@ -564,23 +622,14 @@ export const LiveScoring: React.FC<LiveScoringProps> = ({
         onSwapStrike={handleManualSwapStrike}
         onChangeBowler={() => setIsBowlerModalOpen(true)}
         onChangeBatter={(target) => {
-          const nextAvailable = availableBatters[0];
-          if (!nextAvailable) {
-            onShowToast('No other available batters on the bench.', 'warning');
-            return;
-          }
-          if (target === 'striker') {
-            updateInnings({
-              ...currentInnings,
-              currentStrikerId: nextAvailable.id,
-            });
-            onShowToast(`Striker set to ${nextAvailable.name}`, 'info');
-          } else {
-            updateInnings({
-              ...currentInnings,
-              currentNonStrikerId: nextAvailable.id,
-            });
-            onShowToast(`Non-striker set to ${nextAvailable.name}`, 'info');
+          setSelectedBatterTarget(target);
+          setIsBatterModalOpen(true);
+        }}
+        onEditPlayer={(playerId) => {
+          const allPlayers = [...match.teamA.players, ...match.teamB.players];
+          const found = allPlayers.find((p) => p.id === playerId);
+          if (found) {
+            setEditingPlayer(found);
           }
         }}
       />
@@ -679,6 +728,31 @@ export const LiveScoring: React.FC<LiveScoringProps> = ({
           bowlingTeamPlayers={bowlingTeam.players}
           currentBowlerId={currentInnings.currentBowlerId}
           bowlingStats={bowlingStats}
+        />
+      )}
+
+      {isBatterModalOpen && (
+        <SelectBatterModal
+          isOpen={isBatterModalOpen}
+          onClose={() => setIsBatterModalOpen(false)}
+          onSelectBatter={handleSelectBatter}
+          target={selectedBatterTarget}
+          teamName={battingTeam.name}
+          players={battingTeam.players}
+          currentStrikerId={currentInnings.currentStrikerId}
+          currentNonStrikerId={currentInnings.currentNonStrikerId}
+          battingStats={battingStats}
+          outPlayerIds={outPlayerIds}
+          onSwapStrike={handleManualSwapStrike}
+        />
+      )}
+
+      {editingPlayer && (
+        <EditPlayerModal
+          isOpen={!!editingPlayer}
+          onClose={() => setEditingPlayer(null)}
+          player={editingPlayer}
+          onSavePlayer={handleSavePlayer}
         />
       )}
 

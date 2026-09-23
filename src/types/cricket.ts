@@ -68,9 +68,15 @@ export interface Innings {
 export interface AuditEntry {
   id: string;
   timestamp: string;
-  action: 'ball_added' | 'ball_undone' | 'ball_edited' | 'innings_switched' | 'match_started' | 'match_completed';
+  action: 'ball_added' | 'ball_undone' | 'ball_edited' | 'innings_switched' | 'match_started' | 'match_completed' | 'player_edited';
   description: string;
   details?: string;
+}
+
+export interface MatchReview {
+  rating: number; // 1 to 5
+  feedback?: string;
+  createdAt: string;
 }
 
 export interface Match {
@@ -88,6 +94,7 @@ export interface Match {
   winnerTeamId?: string;
   winMargin?: string;
   playerOfTheMatchId?: string;
+  review?: MatchReview;
   auditLog: AuditEntry[];
   createdAt: string;
   updatedAt: string;

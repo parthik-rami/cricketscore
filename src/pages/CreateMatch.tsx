@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Match, MatchType, Player } from '../types/cricket';
+import { EditPlayerModal } from '../components/EditPlayerModal';
 import {
   Trophy,
   Plus,
@@ -7,6 +8,7 @@ import {
   Play,
   Sparkles,
   Coins,
+  Edit3,
 } from 'lucide-react';
 
 interface CreateMatchProps {
@@ -19,6 +21,9 @@ export const CreateMatch: React.FC<CreateMatchProps> = ({ onStartMatch, onCancel
   const [matchType, setMatchType] = useState<MatchType>('T10');
   const [overs, setOvers] = useState<number>(10);
   const [customOvers, setCustomOvers] = useState<string>('12');
+
+  // Editing player state
+  const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
 
   // Team A
   const [teamAName, setTeamAName] = useState('Royal Challengers');
@@ -104,6 +109,14 @@ export const CreateMatch: React.FC<CreateMatchProps> = ({ onStartMatch, onCancel
       return;
     }
     setTeamBPlayers(teamBPlayers.filter((p) => p.id !== id));
+  };
+
+  const handleSaveCreatedPlayer = (updatedPlayer: Player) => {
+    if (teamAPlayers.some((p) => p.id === updatedPlayer.id)) {
+      setTeamAPlayers(teamAPlayers.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p)));
+    } else if (teamBPlayers.some((p) => p.id === updatedPlayer.id)) {
+      setTeamBPlayers(teamBPlayers.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p)));
+    }
   };
 
   // Form submit / Start Match
@@ -348,13 +361,24 @@ export const CreateMatch: React.FC<CreateMatchProps> = ({ onStartMatch, onCancel
                         </span>
                       )}
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => removePlayerA(p.id)}
-                      className="text-slate-500 hover:text-red-400 p-1"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => setEditingPlayer(p)}
+                        className="text-slate-400 hover:text-cricket-neon p-1 transition-colors"
+                        title="Edit player details"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removePlayerA(p.id)}
+                        className="text-slate-500 hover:text-red-400 p-1 transition-colors"
+                        title="Remove player"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -429,13 +453,24 @@ export const CreateMatch: React.FC<CreateMatchProps> = ({ onStartMatch, onCancel
                         </span>
                       )}
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => removePlayerB(p.id)}
-                      className="text-slate-500 hover:text-red-400 p-1"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => setEditingPlayer(p)}
+                        className="text-slate-400 hover:text-cricket-neon p-1 transition-colors"
+                        title="Edit player details"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removePlayerB(p.id)}
+                        className="text-slate-500 hover:text-red-400 p-1 transition-colors"
+                        title="Remove player"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -554,6 +589,15 @@ export const CreateMatch: React.FC<CreateMatchProps> = ({ onStartMatch, onCancel
           </button>
         </div>
       </form>
+
+      {editingPlayer && (
+        <EditPlayerModal
+          isOpen={!!editingPlayer}
+          onClose={() => setEditingPlayer(null)}
+          player={editingPlayer}
+          onSavePlayer={handleSaveCreatedPlayer}
+        />
+      )}
     </div>
   );
 };

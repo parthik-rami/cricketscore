@@ -10,7 +10,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Calendar,
-  Sparkles,
   Check,
   Zap,
 } from 'lucide-react';
@@ -88,12 +87,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
       {/* Main Hero */}
       <div className="relative overflow-hidden rounded-3xl glass-panel border border-cricket-500/20 bg-gradient-to-b from-stadium-850/90 via-stadium-900 to-stadium-950 p-8 sm:p-12 text-center sm:text-left">
         {/* Subtle Pitch Grid Pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0, 255, 135, 0.4) 1px, transparent 0)`,
             backgroundSize: '24px 24px'
-          }} 
+          }}
         />
         {/* Subtle glowing cricket ball graphic decoration */}
         <div className="absolute top-1/2 right-12 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none">
@@ -279,11 +278,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         {m.name}
                       </span>
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-black uppercase ${
-                          m.status === 'completed'
+                        className={`px-2 py-0.5 rounded text-[10px] font-black uppercase ${m.status === 'completed'
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                             : 'bg-red-500/10 text-red-400 border border-red-500/20 animate-pulse'
-                        }`}
+                          }`}
                       >
                         {m.status}
                       </span>
